@@ -1,5 +1,45 @@
 #include "libft.h"
 
+static int	ft_issep(char c, char const *set)
+{
+	int	i;
+
+	i = 0;
+	while (set[i])
+	{
+		if (set[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+static int	ft_startinit(int i, char const *s1, char const *set)
+{
+	while (ft_issep(s1[i], set))
+		i++;
+	return (i);
+}
+
+static int	ft_endinit(int j, char const *s1, char const *set)
+{
+	if (j < 0)
+		j = 0;
+	while (ft_issep(s1[j], set))
+		j--;
+	return (j);
+}
+
+static int	ft_strlen1(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
+
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char *tab;
