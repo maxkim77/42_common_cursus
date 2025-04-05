@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeongkim <jeongkim@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/05 14:54:25 by jeongkim          #+#    #+#             */
+/*   Updated: 2025/04/05 14:54:43 by jeongkim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 static int	ft_issep(char c, char const *set)
@@ -42,7 +54,7 @@ static int	ft_strlen1(const char *s)
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	char *tab;
+	char	*tab;
 	int		i;
 	int		j;
 	int		k;

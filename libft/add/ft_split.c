@@ -3,21 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeongkim <jeongkim@student.42seoul.kr      +#+  +:+       +#+        */
+/*   By: jeongkim <jeongkim@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 14:54:25 by jeongkim          #+#    #+#             */
 /*   Updated: 2025/04/05 14:54:43 by jeongkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
-
-typedef struct s_split {
-	char	**tab;
-	int		i;
-	int		j;
-	int		i_tab;
-}	t_split;
 
 static int	ft_number_of_words(char const *s, char c)
 {
@@ -52,11 +44,7 @@ static char	*ft_word_into_tab(char const *s, int start, int end)
 	if (!tab_string)
 		return (NULL);
 	while (start < end)
-	{
-		tab_string[i] = s[start];
-		start++;
-		i++;
-	}
+		tab_string[i++] = s[start++];
 	tab_string[i] = '\0';
 	return (tab_string);
 }
@@ -67,17 +55,14 @@ static void	*ft_free(char **strs, int count)
 
 	i = 0;
 	while (i < count)
-	{
-		free(strs[i]);
-		i++;
-	}
+		free(strs[i++]);
 	free(strs);
 	return (NULL);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	t_split	split;
+	struct s_split	split;
 
 	split.i = 0;
 	split.j = 0;
@@ -94,7 +79,7 @@ char	**ft_split(char const *s, char c)
 			split.j++;
 		split.tab[split.i_tab] = ft_word_into_tab(s, split.i, split.j);
 		if (!(split.tab[split.i_tab]))
-			return (ft_free(split.tab, split.j));
+			return (ft_free(split.tab, split.i_tab));
 		split.i = split.j;
 		split.i_tab++;
 	}

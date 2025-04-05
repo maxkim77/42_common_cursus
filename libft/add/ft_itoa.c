@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeongkim <jeongkim@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/05 14:54:25 by jeongkim          #+#    #+#             */
+/*   Updated: 2025/04/05 14:54:43 by jeongkim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 static int	ft_count(int n)
@@ -45,7 +57,6 @@ char	*ft_itoa(int n)
 	conversion = malloc(sizeof(char) * (count + 1));
 	if (!conversion)
 		return (NULL);
-
 	if (nbr < 0)
 	{
 		conversion[0] = '-';
@@ -55,7 +66,6 @@ char	*ft_itoa(int n)
 		conversion[0] = '0';
 	else
 		conversion = ft_putnbr(nbr, conversion, count);
-
 	conversion[count - 1] = '\0';
 	return (conversion);
 }
