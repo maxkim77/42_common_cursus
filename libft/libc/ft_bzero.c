@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yourlogin <yourlogin@student.42.fr>         +#+  +:+       +#+        */
+/*   By: jeongkim <jeongkim@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/12 12:45:00 by yourlogin         #+#    #+#             */
-/*   Updated: 2025/04/12 12:45:00 by yourlogin        ###   ########.fr       */
+/*   Created: 2025/04/13 11:29:18 by jeongkim          #+#    #+#             */
+/*   Updated: 2025/04/13 11:29:20 by jeongkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
