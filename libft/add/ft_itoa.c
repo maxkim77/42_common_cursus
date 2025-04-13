@@ -6,44 +6,30 @@
 /*   By: jeongkim <jeongkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:00:00 by jeongkim          #+#    #+#             */
-/*   Updated: 2025/04/13 12:24:45 by jeongkim         ###   ########.fr       */
+/*   Updated: 2025/04/13 15:06:32 by jeongkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_count(int n)
+static int	ft_count(long n)
 {
 	int	count;
 
-	count = 1;
+	if (n == 0)
+		return (1);
+	count = 0;
 	if (n < 0)
 	{
-		count++;
 		n = -n;
+		count++;
 	}
-	if (n == 0)
-		return (count);
 	while (n > 0)
 	{
-		n = n / 10;
+		n /= 10;
 		count++;
 	}
 	return (count);
-}
-
-static char	*ft_putnbr(long n, char *conversion, int count)
-{
-	int	position;
-
-	position = count - 2;
-	while (n > 0)
-	{
-		conversion[position] = (n % 10) + '0';
-		n = n / 10;
-		position--;
-	}
-	return (conversion);
 }
 
 char	*ft_itoa(int n)
@@ -57,15 +43,18 @@ char	*ft_itoa(int n)
 	conversion = malloc(sizeof(char) * (count + 1));
 	if (!conversion)
 		return (NULL);
+	conversion[count] = '\0';
+	if (nbr == 0)
+		conversion[0] = '0';
 	if (nbr < 0)
 	{
 		conversion[0] = '-';
 		nbr = -nbr;
 	}
-	if (nbr == 0)
-		conversion[0] = '0';
-	else
-		conversion = ft_putnbr(nbr, conversion, count);
-	conversion[count - 1] = '\0';
+	while (nbr > 0)
+	{
+		conversion[--count] = (nbr % 10) + '0';
+		nbr /= 10;
+	}
 	return (conversion);
 }
