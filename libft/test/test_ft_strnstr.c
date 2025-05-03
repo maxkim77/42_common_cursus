@@ -1,50 +1,61 @@
-#include "libft.h"
 #include <stdio.h>
+#include <string.h>
+#include "libft.h"
 
-void	test_case(const char *haystack, const char *needle, size_t len)
+// 표준 함수 대체용: 비교 대상 함수 정의
+char *local_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	char *result = ft_strnstr(haystack, needle, len);
+	size_t i = 0, j;
 
-	if (result != NULL)
-		printf("✅ FOUND: haystack = \"%s\", needle = \"%s\", len = %zu -> \"%s\"\n",
-			haystack, needle, len, result);
+	if (!*needle)
+		return (char *)haystack;
+
+	while (haystack[i] && i < len)
+	{
+		if (haystack[i] == needle[0])
+		{
+			j = 0;
+			while (needle[j] &&
+				   haystack[i + j] == needle[j] &&
+				   (i + j) < len)
+				j++;
+			if (!needle[j])
+				return (char *)(haystack + i);
+		}
+		i++;
+	}
+	return NULL;
+}
+
+// 결과 출력 함수
+void	print_result(const char *label, const char *ft_res, const char *std_res)
+{
+	if ((ft_res == NULL && std_res == NULL) ||
+		(ft_res && std_res && strcmp(ft_res, std_res) == 0))
+	{
+		printf("[OK] %s: '%s'\n", label, ft_res ? ft_res : "NULL");
+	}
 	else
-		printf("❌ NOT FOUND: haystack = \"%s\", needle = \"%s\", len = %zu\n",
-			haystack, needle, len);
+	{
+		printf("[FAIL] %s:\n  got     = '%s'\n  expected = '%s'\n",
+			label,
+			ft_res ? ft_res : "NULL",
+			std_res ? std_res : "NULL");
+	}
 }
 
 int	main(void)
 {
-	// 기본적인 찾기
-	test_case("Hello, world!", "world", 13);
+	const char *haystack = "abcdefg";
 
-	// len을 짧게 줘서 찾지 못하는 경우
-	test_case("Hello, world!", "world", 5);
+	print_result("Basic match", ft_strnstr(haystack, "cde", 7), local_strnstr(haystack, "cde", 7));
+	print_result("Exact range match", ft_strnstr(haystack, "cde", 5), local_strnstr(haystack, "cde", 5));
+	print_result("Too short range", ft_strnstr(haystack, "cde", 3), local_strnstr(haystack, "cde", 3));
+	print_result("Needle not in haystack", ft_strnstr(haystack, "xyz", 7), local_strnstr(haystack, "xyz", 7));
+	print_result("Empty needle", ft_strnstr(haystack, "", 7), local_strnstr(haystack, "", 7));
+	print_result("Empty haystack", ft_strnstr("", "a", 1), local_strnstr("", "a", 1));
+	print_result("Zero len", ft_strnstr(haystack, "abc", 0), local_strnstr(haystack, "abc", 0));
 
-	// needle이 haystack 맨 앞에 있을 때
-	test_case("abcde", "abc", 5);
-
-	// needle이 haystack 중간에 있을 때
-	test_case("abcde", "c", 5);
-
-	// needle이 haystack에 없는 경우
-	test_case("abcdefg", "hij", 7);
-
-	// haystack과 needle이 완전히 같은 경우
-	test_case("abcdef", "abcdef", 6);
-
-	// 빈 needle 테스트 (무조건 haystack 반환)
-	test_case("abcdef", "", 6);
-
-	// len == 0 인 경우 (needle이 ""가 아니면 무조건 NULL)
-	test_case("abcdef", "abc", 0);
-
-	// len이 haystack보다 큰 경우
-	test_case("short", "short", 100);
-
-	// haystack이 빈 문자열일 때
-	test_case("", "", 5);
-	test_case("", "abc", 5);
-
-	return (0);
+	return 0;
 }
+//gcc -Wall -Wextra -Werror -I.. test_ft_strnstr.c ../libc/ft_strnstr.c -o test_ft_strnstr
