@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeongkim <jeongkim@student.42seoul.kr      +#+  +:+       +#+        */
+/*   By: jeongkim <jeongkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 14:54:25 by jeongkim          #+#    #+#             */
-/*   Updated: 2025/04/05 14:54:43 by jeongkim         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:05:38 by jeongkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-typedef struct s_split {
-	char	**tab;
-	int		i;
-	int		j;
-	int		i_tab;
-}	t_split;
 
 static int	ft_number_of_words(char const *s, char c)
 {

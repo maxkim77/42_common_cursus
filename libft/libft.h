@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeongkim <jeongkim@student.42seoul.kr      +#+  +:+       +#+        */
+/*   By: jeongkim <jeongkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:00:58 by jeongkim          #+#    #+#             */
-/*   Updated: 2025/04/12 20:01:01 by jeongkim         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:05:30 by jeongkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }	t_list;
+
+typedef struct s_split {
+	char	**tab;
+	int		i;
+	int		j;
+	int		i_tab;
+}	t_split;
 
 void	ft_bzero(void *s, size_t n);
 int		ft_isalnum(int c);

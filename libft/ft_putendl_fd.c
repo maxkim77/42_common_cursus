@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeongkim <jeongkim@student.42seoul.kr      +#+  +:+       +#+        */
+/*   By: jeongkim <jeongkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/12 20:24:58 by jeongkim          #+#    #+#             */
-/*   Updated: 2025/04/12 20:33:19 by jeongkim         ###   ########.fr       */
+/*   Created: 2025/04/13 15:10:10 by jeongkim          #+#    #+#             */
+/*   Updated: 2025/05/06 17:11:01 by jeongkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_putendl_fd(char *str, int fd)
 {
-	t_list	*tmp;
+	int	i;
 
-	while (*lst)
+	i = 0;
+	while (str[i])
 	{
-		tmp = (*lst)->next;
-		ft_lstdelone(*lst, del);
-		*lst = tmp;
+		write(fd, &str[i], 1);
+		i++;
 	}
-	*lst = NULL;
+	write(fd, "\n", 1);
 }
