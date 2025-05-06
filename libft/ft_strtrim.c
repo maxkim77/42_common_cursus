@@ -6,7 +6,7 @@
 /*   By: jeongkim <jeongkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:00:00 by jeongkim          #+#    #+#             */
-/*   Updated: 2025/04/13 12:25:31 by jeongkim         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:21:15 by jeongkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,6 @@ static int	ft_endinit(int j, char const *s1, char const *set)
 	return (j);
 }
 
-static int	ft_strlen1(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*tab;
@@ -62,7 +52,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	i = ft_startinit(0, s1, set);
 	j = ft_endinit(ft_strlen(s1) - 1, s1, set);
 	k = 0;
-	if (i >= ft_strlen1(s1))
+	if (i >= ft_strlen(s1))
 		return (ft_strdup(""));
 	tab = malloc(sizeof(char) * ((j - i) + 2));
 	if (!tab || !s1)
