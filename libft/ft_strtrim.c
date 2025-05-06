@@ -6,7 +6,7 @@
 /*   By: jeongkim <jeongkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:00:00 by jeongkim          #+#    #+#             */
-/*   Updated: 2025/05/06 17:21:15 by jeongkim         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:29:05 by jeongkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_issep(char c, char const *set)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (set[i])
@@ -26,18 +26,18 @@ static int	ft_issep(char c, char const *set)
 	return (0);
 }
 
-static int	ft_startinit(int i, char const *s1, char const *set)
+static size_t	ft_startinit(size_t i, char const *s1, char const *set)
 {
-	while (ft_issep(s1[i], set))
+	while (s1[i] && ft_issep(s1[i], set))
 		i++;
 	return (i);
 }
 
-static int	ft_endinit(int j, char const *s1, char const *set)
+static size_t	ft_endinit(size_t j, char const *s1, char const *set)
 {
-	if (j < 0)
-		j = 0;
-	while (ft_issep(s1[j], set))
+	if (!s1 || j == 0)
+		return (0);
+	while (j > 0 && ft_issep(s1[j], set))
 		j--;
 	return (j);
 }
@@ -45,24 +45,22 @@ static int	ft_endinit(int j, char const *s1, char const *set)
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*tab;
-	int		i;
-	int		j;
-	int		k;
+	size_t	i;
+	size_t	j;
+	size_t	k;
 
+	if (!s1 || !set)
+		return (NULL);
 	i = ft_startinit(0, s1, set);
 	j = ft_endinit(ft_strlen(s1) - 1, s1, set);
 	k = 0;
-	if (i >= ft_strlen(s1))
+	if (i > j)
 		return (ft_strdup(""));
 	tab = malloc(sizeof(char) * ((j - i) + 2));
-	if (!tab || !s1)
+	if (!tab)
 		return (NULL);
 	while (i <= j)
-	{
-		tab[k] = s1[i];
-		k++;
-		i++;
-	}
+		tab[k++] = s1[i++];
 	tab[k] = '\0';
 	return (tab);
 }
