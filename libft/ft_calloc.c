@@ -16,8 +16,12 @@ void	*ft_calloc(size_t count, size_t size)
 {
 	unsigned char	*tmp;
 	size_t			i;
+	size_t			bytes;
 
 	i = 0;
+	bytes = count * size;
+	if (size && ((bytes / size) != count))
+		return (NULL);
 	tmp = malloc(count * size);
 	if (!tmp)
 		return (NULL);

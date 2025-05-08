@@ -13,7 +13,6 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <stdio.h> //pas oublier de degager
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
