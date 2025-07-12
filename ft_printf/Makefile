@@ -1,26 +1,37 @@
-SRCS	= ft_printf.c ft_check_type.c ft_put_c.c ft_put_d_i.c ft_put_s.c ft_put_u.c ft_put_x.c ft_put_p.c
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jeongkim <jeongkim@student.42seoul.kr>     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/07/12 21:47:20 by jeongkim          #+#    #+#              #
+#    Updated: 2025/07/12 21:47:20 by jeongkim         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-OBJS = ${SRCS:.c=.o}
+NAME    = libftprintf.a
 
-NAME = libftprintf.a
+SRCS    = ft_printf.c ft_check_type.c ft_put_c.c ft_put_d_i.c ft_put_s.c ft_put_u.c ft_put_x.c ft_put_p.c
 
-CC = cc
-RM = rm -f
+OBJS    = ${SRCS:.c=.o}
 
-CFLAGS = -Wall -Wextra -Werror
+CC      = cc
+RM      = rm -f
+CFLAGS  = -Wall -Wextra -Werror
 
 all: ${NAME}
 
-%.o: %.c
-		$(CC) $(CFLAGS) -o $@ -c $?
+${NAME}: ${OBJS}
+		ar rcs ${NAME} ${OBJS}
 
-${NAME}: 	${OBJS}
-					ar rcs ${NAME} ${OBJS}
+%.o: %.c
+		${CC} ${CFLAGS} -o $@ -c $<
 
 clean:
-					${RM} ${OBJS}
+		${RM} ${OBJS}
 
-fclean:		clean
-					${RM} ${NAME}
+fclean: clean
+		${RM} ${NAME}
 
-re:	fclean all
+re: fclean all

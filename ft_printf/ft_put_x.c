@@ -1,14 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_put_x.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeongkim <jeongkim@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/12 14:00:00 by jeongkim          #+#    #+#             */
+/*   Updated: 2025/07/12 14:00:00 by jeongkim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 int	ft_put_x(unsigned int nb, int type)
 {
-	char *alpha;
+	char	*alpha;
 
 	if (type == 'x')
 		alpha = "0123456789abcdef";
 	else
 		alpha = "0123456789ABCDEF";
-	
 	return (ft_base16(nb, alpha));
 }
 
