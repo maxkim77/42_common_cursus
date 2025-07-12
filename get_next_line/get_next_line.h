@@ -27,6 +27,5 @@ size_t	ft_strlen(char *s);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
 char	*ft_strjoin(const char *s1, const char *s2);
 void	*ft_calloc(size_t count, size_t size);
-void	fill_str(char *res, char *s1, char *s2);
 
 #endif
