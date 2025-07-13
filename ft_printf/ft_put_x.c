@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	ft_put_x(unsigned int nb, int type)
+int	ft_put_x(unsigned int nb, char type)
 {
 	char	*alpha;
 

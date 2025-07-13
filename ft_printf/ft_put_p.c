@@ -18,7 +18,7 @@ int	ft_put_p(void *arg)
 	char			*alpha;
 	unsigned long	arg2;
 
-	arg2 = (unsigned long)arg;
+	arg2 = (uintptr_t)arg;
 	alpha = "0123456789abcdef";
 	count = 0;
 	count += ft_put_s("0x");
