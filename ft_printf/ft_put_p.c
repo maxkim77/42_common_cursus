@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_put_p.c                                         :+:      :+:    :+:   :+:   */
+/*   ft_put_p.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeongkim <jeongkim@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jeongkim <jeongkim@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 14:00:00 by jeongkim          #+#    #+#             */
-/*   Updated: 2025/07/12 14:00:00 by jeongkim         ###   ########.fr       */
+/*   Updated: 2025/08/03 13:40:00 by jeongkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 int	ft_put_p(void *arg)
 {
-	int				count;
+	unsigned long	addr;
 	char			*alpha;
-	unsigned long	arg2;
+	int				count;
 
-	arg2 = (uintptr_t)arg;
+	if (!arg)
+		return (ft_put_s("(nil)"));
+	addr = (unsigned long)arg;
 	alpha = "0123456789abcdef";
 	count = 0;
 	count += ft_put_s("0x");
-	count += ft_base16(arg2, alpha);
+	count += ft_base16(addr, alpha);
 	return (count);
 }

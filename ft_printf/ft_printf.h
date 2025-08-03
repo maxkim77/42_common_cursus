@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
+# include <stdint.h>
 
 int	ft_printf(const char *format, ...);
 int	ft_check_type(const char type, va_list args);
