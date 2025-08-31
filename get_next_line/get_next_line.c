@@ -12,94 +12,98 @@
 
 #include "get_next_line.h"
 
-static char	*_fill_line_buffer(int fd, char *left_c, char *buffer);
-static char	*_set_line(char *line);
-static char	*ft_strchr(char *s, int c);
-
-char	*get_next_line(int fd)
+static char	*find_nl(char *s)
 {
-	static char	*left_c;
-	char		*line;
-	char		*buffer;
-
-	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (fd < 0 || BUFFER_SIZE <= 0 || !buffer || read(fd, 0, 0) < 0)
-	{
-		free(left_c);
-		free(buffer);
-		left_c = NULL;
-		return (NULL);
-	}
-	line = _fill_line_buffer(fd, left_c, buffer);
-	free(buffer);
-	if (!line)
-		return (NULL);
-	left_c = _set_line(line);
-	return (line);
-}
-
-static char	*_set_line(char *line_buffer)
-{
-	char	*left_c;
 	size_t	i;
 
-	i = 0;
-	while (line_buffer[i] != '\n' && line_buffer[i] != '\0')
-		i++;
-	if (line_buffer[i] == '\0' || line_buffer[i + 1] == '\0')
-		return (0);
-	left_c = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - i);
-	if (*left_c == '\0')
-	{
-		free(left_c);
-		left_c = NULL;
-	}
-	line_buffer[i + 1] = '\0';
-	return (left_c);
-}
-
-static char	*_fill_line_buffer(int fd, char *left_c, char *buffer)
-{
-	ssize_t		b_read;
-	char		*tmp;
-
-	b_read = 1;
-	while (b_read > 0)
-	{
-		b_read = read(fd, buffer, BUFFER_SIZE);
-		if (b_read == -1)
-		{
-			free(left_c);
-			return (0);
-		}
-		else if (b_read == 0)
-			break ;
-		buffer[b_read] = '\0';
-		if (!left_c)
-			left_c = ft_strdup("");
-		tmp = left_c;
-		left_c = ft_strjoin(tmp, buffer);
-		free(tmp);
-		if (ft_strchr(buffer, '\n'))
-			break ;
-	}
-	return (left_c);
-}
-
-static char	*ft_strchr(char *s, int c)
-{
-	unsigned int	i;
-	char			cc;
-
-	cc = (char)c;
+	if (!s)
+		return (NULL);
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == cc)
-			return ((char *)&s[i]);
+		if (s[i] == '\n')
+			return (&s[i]);
 		i++;
 	}
-	if (s[i] == cc)
-		return ((char *)&s[i]);
 	return (NULL);
+}
+
+static char	*append_reads(int fd, char *stash)
+{
+	ssize_t	br;
+	char	*buf;
+	char	*tmp;
+
+	if (!stash)
+		stash = ft_strdup("");
+	if (!stash)
+		return (NULL);
+	buf = (char *)malloc(BUFFER_SIZE + 1);
+	if (!buf)
+		return (free(stash), NULL);
+	br = 1;
+	while (!find_nl(stash) && br > 0)
+	{
+		br = read(fd, buf, BUFFER_SIZE);
+		if (br < 0)
+			return (free(buf), free(stash), NULL);
+		buf[br] = '\0';
+		tmp = stash;
+		stash = ft_strjoin(tmp, buf);
+		free(tmp);
+		if (!stash)
+			return (free(buf), NULL);
+	}
+	free(buf);
+	return (stash);
+}
+
+static char	*cut_and_keep(char *line, char **stash_ref)
+{
+	char	*nlp;
+	char	*rest;
+
+	nlp = find_nl(line);
+	if (!nlp || *(nlp + 1) == '\0')
+	{
+		*stash_ref = NULL;
+		return (line);
+	}
+	rest = ft_strdup(nlp + 1);
+	if (!rest)
+	{
+		free(line);
+		*stash_ref = NULL;
+		return (NULL);
+	}
+	*(nlp + 1) = '\0';
+	*stash_ref = rest;
+	return (line);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*stash;
+	char		*line;
+
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		if (stash)
+			free(stash);
+		stash = NULL;
+		return (NULL);
+	}
+	line = append_reads(fd, stash);
+	if (!line)
+	{
+		stash = NULL;
+		return (NULL);
+	}
+	if (line[0] == '\0')
+	{
+		free(line);
+		stash = NULL;
+		return (NULL);
+	}
+	return (cut_and_keep(line, &stash));
 }
