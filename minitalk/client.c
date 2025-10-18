@@ -6,7 +6,7 @@
 /*   By: jeongkim <jeongkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 15:30:15 by jeongkim          #+#    #+#             */
-/*   Updated: 2025/10/18 16:41:29 by jeongkim         ###   ########.fr       */
+/*   Updated: 2025/10/18 16:54:56 by jeongkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,15 @@ int main(int ac, char **av)
 
     if (ac != 3)
     {
-        ft_putstr_fd("\e[31m ##error - incorrect syntax ##\0]")
+        ft_putstr_fd("\e[31m ##error - incorrect syntax ##\n\e[0m", STDOUT_FILENO);
+        ft_putstr_fd("\e[92m./client <the server PID> <the string to send>\n\e[0m",STDOUT_FILENO);
+        return (EXIT_FAILURE);
     }
+    else if (kill(ft_atoi(argv[1]), 0) < 0)
+    {
+        ft_putstr_fd("\e[31m## error - PID is invalid ##\n\e[0m", STDOUT_FILENO);
+        return (EXIT_FAILURE);
+    }
+    sigemptyset(&s_client.sa_mask);
+    s_client.sa_flags = SA_RESTART;
 }
